@@ -21,7 +21,7 @@ model.add(kr.layers.Dense(units=1000, activation='relu', input_dim=784))
 model.add(kr.layers.Dense(units=750, activation='relu'))
 model.add(kr.layers.Dense(units=512, activation='relu'))
 
-# Compile model - Adam optimizer for our model
+# Compile model
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 # Add 10 output neurons, one for each
@@ -69,7 +69,7 @@ if option == 'y':
 
     from random import randint
     
-    for i in range(10): #Run 20 tests
+    for i in range(10): #Run 10 tests
         print("----------------------------------")
         randIndex = randint(0, 9999) #Get a random index to pull an image from
         test = model.predict(test_images[randIndex:randIndex+1]) #Pull the image from the dataset
