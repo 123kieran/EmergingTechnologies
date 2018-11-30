@@ -4,7 +4,7 @@
 
 ## Student ID: G00326425
 
-This is a collection of my Jupyter Notebooks and Python Scripts. This is for my 4rd year Emerging Technologies module in GMIT.
+This is a collection of my Jupyter Notebooks and Python Scripts. This is for my 4th year Emerging Technologies module in GMIT.
 
 
 ## Project Description
