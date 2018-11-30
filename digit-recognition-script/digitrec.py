@@ -22,7 +22,7 @@ model.add(kr.layers.Dense(units=750, activation='relu'))
 model.add(kr.layers.Dense(units=512, activation='relu'))
 
 # Compile model - Adam optimizer for our model
-model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 # Add 10 output neurons, one for each
 model.add(kr.layers.Dense(units=10, activation='softmax'))
