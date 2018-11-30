@@ -27,7 +27,7 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 # Add 10 output neurons, one for each
 model.add(kr.layers.Dense(units=10, activation='softmax'))
 
-# Read in all the files
+# Read in the files
 with gzip.open('data/t10k-images-idx3-ubyte.gz', 'rb') as f:
     test_images = f.read()
     
@@ -40,7 +40,7 @@ with gzip.open('data/train-images-idx3-ubyte.gz', 'rb') as f:
 with gzip.open('data/train-labels-idx1-ubyte.gz', 'rb') as f:
     training_labels = f.read()
 
-# Read all the files and save into memory
+# Read all files and save to memory
 training_images = ~np.array(list(training_images[16:])).reshape(60000, 28, 28).astype(np.uint8) / 255.0
 training_labels =  np.array(list(training_labels[8:])).astype(np.uint8)
 
@@ -49,7 +49,6 @@ test_labels = np.array(list(test_labels[8:])).astype(np.uint8)
 
 # Flatten the array , 784 neurons
 inputs = training_images.reshape(60000, 784)
-
 
 # Encode the data into binary values
 encoder = pre.LabelBinarizer()
