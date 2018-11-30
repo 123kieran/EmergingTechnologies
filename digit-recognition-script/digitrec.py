@@ -1,5 +1,3 @@
-# Adapted from https://machinelearningmastery.com/handwritten-digit-recognition-using-convolutional-neural-networks-python-keras/
-
 # imports
 import gzip
 import keras as kr
@@ -15,19 +13,16 @@ from keras.models import load_model
 # Start neural network
 model = kr.models.Sequential()
 
-#Build our neural network model
-model = Sequential()
-
-#Build our neural network model
+#Build neural network 
 model = Sequential()
 
 # Neural Network with 3 layers (1000, 750, 512)
 model.add(kr.layers.Dense(units=1000, activation='relu', input_dim=784))
 model.add(kr.layers.Dense(units=750, activation='relu'))
 model.add(kr.layers.Dense(units=512, activation='relu'))
-# Compile model - Adam optimizer for our model
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
+# Compile model - Adam optimizer for our model
+model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
 
 # Add 10 output neurons, one for each
 model.add(kr.layers.Dense(units=10, activation='softmax'))
@@ -60,4 +55,44 @@ inputs = training_images.reshape(60000, 784)
 encoder = pre.LabelBinarizer()
 encoder.fit(training_labels)
 outputs = encoder.transform(training_labels)
+
+print("-------------------Welcome---------------------------------")
+print("Would you like to train a dataset? Or load the data you have?")
+print("Enter Y to train data set")
+print("Enter N to load your own data")
+option = input("y/n : ")
+if option == 'y':
+    #Train - This will train the model.
+    model.fit(inputs, outputs, epochs=10, batch_size=100)
+    
+    # Save the model to local disk
+    model.save("data/model.h5")
+
+    from random import randint
+    
+    for i in range(10): #Run 20 tests
+        print("----------------------------------")
+        randIndex = randint(0, 9999) #Get a random index to pull an image from
+        test = model.predict(test_images[randIndex:randIndex+1]) #Pull the image from the dataset
+        result = test.argmax(axis=1) #Set result to the highest array value
+        print("The actual number:  ", test_labels[randIndex:randIndex+1])
+        print("The network reads:  ", result)
+        print("----------------------------------")
+        
+    #print out accuracy
+    metrics = model.evaluate(inputs, outputs, verbose=0)
+    print("Metrics(Test loss & Test Accuracy): ")
+    print(metrics)
+
+    # Evaluates and then prints error rate accuracy
+    scores = model.evaluate(inputs, outputs, verbose=2)
+    print("Error Rate: %.2f%%" % (100-scores[1]*100))
+
+    print((encoder.inverse_transform(model.predict(test_images)) == test_labels).sum())
+
+elif option == 'n':
+    model.load_weights("data/model.h5")
+else:
+    print("*Invalid option selected*")
+    print("**Model will not produce accurate predictions due to lack of training**")
 
